@@ -22,8 +22,9 @@
 <!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
 <!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
         <java.version>11</java.version>
-        <source>${java.version}</source>
-        <target>${java.version}</target>
+        <maven.compiler.release>11</maven.compiler.release>
+<!--        <source>11</source>-->
+<!--        <target>11</target>-->
 
     </properties>
 
