@@ -75,7 +75,7 @@ public class Bot extends TelegramLongPollingBot {
                 TopTeamsParser topTeamsParser = new TopTeamsParser();
 
                 List<TopTeam> topTeamsList= topTeamsParser.getContent();
-                System.out.println(topTeamsList);
+
 
                 StringBuilder text = new StringBuilder();
 
