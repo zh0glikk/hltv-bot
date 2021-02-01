@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -30,6 +32,9 @@ public class Bot extends TelegramLongPollingBot {
 
     private static final String TOKEN = "1592191900:AAGmb-DhWdOyni2rccFOgCDn2m168PFIjKs";
     private static final String USERNAME = "hltv_free_bot";
+
+//    private static final String USERNAME = "testzh0glikkbot";
+//    private static final String TOKEN = "1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo";
 
     @Autowired
     private HomeKeyboard homeKeyboard;
@@ -158,15 +163,14 @@ public class Bot extends TelegramLongPollingBot {
 
                 TopTeam team = findByTeamName(teamName, topTeamsList);
 
-                if ( team != null ) {
-                    text += TeamPattern.all(team);
-                }
+                System.out.println(team.getPhotoUrl());
+
+                text += TeamPattern.all(team);
 
                 SendMessage sendMessage = new SendMessage();
 
                 sendMessage.setText(text);
                 sendMessage.setChatId(chat_id);
-                assert team != null;
                 sendMessage.setReplyMarkup(playersKeyboard.getKeyboard(
                         team.getPlayers(),
                         team.getUrls()));
@@ -179,17 +183,22 @@ public class Bot extends TelegramLongPollingBot {
             } else if ( query.startsWith("PlayerCallBack") ) {
                 String playerUrl = query.split(":")[1];
 
-                SendMessage sendMessage = new SendMessage();
+                SendPhoto sendPhoto = new SendPhoto();
 
                 PlayersParser playersParser = new PlayersParser("https://www.hltv.org/" + playerUrl);
 
                 Player player = playersParser.getContent().get(0);
 
-                sendMessage.setText(PlayerPattern.all(player));
-                sendMessage.setChatId(chat_id);
+                InputFile file = new InputFile(player.getPhotoUrl());
+
+                System.out.println(player.getPhotoUrl());
+
+                sendPhoto.setCaption(PlayerPattern.all(player));
+                sendPhoto.setPhoto(file);
+                sendPhoto.setChatId(chat_id);
 
                 try {
-                    execute(sendMessage);
+                    execute(sendPhoto);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }

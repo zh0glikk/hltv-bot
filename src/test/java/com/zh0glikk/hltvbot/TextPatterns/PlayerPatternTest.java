@@ -2,6 +2,7 @@ package com.zh0glikk.hltvbot.TextPatterns;
 
 import model.Player;
 import org.junit.jupiter.api.Test;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,7 +19,8 @@ class PlayerPatternTest {
                 Float.parseFloat("0.89"),
                 "43%",
                 Integer.parseInt("89"),
-                Float.parseFloat("0.68")
+                Float.parseFloat("0.68"),
+                ""
         );
 
         assertEquals(PlayerPattern.all(player),
@@ -28,8 +30,8 @@ class PlayerPatternTest {
                         "Current team: Astralis\n" +
                         "\n" +
                         "Statistics\n" +
-                        "rating 2.0: 1.09\n" +
-                        "headshots: 43%\n" +
+                        "Rating 2.0: 1.09\n" +
+                        "Headshots: 43%\n" +
                         "Kills per round: 0.89\n" +
                         "Maps played: 89\n" +
                         "Death per round: 0.68\n");

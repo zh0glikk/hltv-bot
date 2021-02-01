@@ -18,16 +18,17 @@ class TeamPatternTest {
 
 
         TopTeam topTeam = new TopTeam(
-                "#1",
+                "#5",
                 "Astralis",
                 "(1000 points)",
                 players,
-                urls
+                urls,
+                ""
         );
 
         assertEquals(TeamPattern.all(topTeam),
-                "#1. Astralis (1000 points)\n" +
-                        "players: [device, xyp9x, magisk]\n");
+                "#5. Astralis (1000 points)\n" +
+                        "Players: [device, xyp9x, magisk]\n");
     }
 
     @Test
@@ -36,15 +37,16 @@ class TeamPatternTest {
         List<String> urls = new ArrayList<>();
 
         TopTeam topTeam = new TopTeam(
-                "#1",
+                "#5",
                 "Astralis",
                 "(1000 points)",
                 players,
-                urls
+                urls,
+                ""
         );
 
         assertEquals(TeamPattern.forStat(topTeam).toString(),
-                "#1. Astralis, (1000 points)\n");
+                "#5. Astralis, (1000 points)\n");
     }
 
 }
