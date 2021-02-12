@@ -21,11 +21,11 @@ import java.util.List;
 @Component
 public class Bot extends TelegramLongPollingBot {
 
-//    private static final String TOKEN = "1592191900:AAGmb-DhWdOyni2rccFOgCDn2m168PFIjKs";
-//    private static final String USERNAME = "hltv_free_bot";
+    private static final String TOKEN = "1592191900:AAGmb-DhWdOyni2rccFOgCDn2m168PFIjKs";
+    private static final String USERNAME = "hltv_free_bot";
 
-    private static final String USERNAME = "testzh0glikkbot";
-    private static final String TOKEN = "1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo";
+//    private static final String USERNAME = "testzh0glikkbot";
+//    private static final String TOKEN = "1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo";
 
     @Autowired
     private HomeKeyboard homeKeyboard;
