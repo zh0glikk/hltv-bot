@@ -3,14 +3,8 @@ package com.zh0glikk.hltvbot;
 import com.zh0glikk.hltvbot.KeyBoards.HomeKeyboard;
 import com.zh0glikk.hltvbot.KeyBoards.PlayersKeyboard;
 import com.zh0glikk.hltvbot.KeyBoards.TopTeamsKeyboard;
-import com.zh0glikk.hltvbot.TextPatterns.MatchPattern;
-import com.zh0glikk.hltvbot.TextPatterns.PlayerPattern;
-import com.zh0glikk.hltvbot.TextPatterns.ResultsPattern;
-import com.zh0glikk.hltvbot.TextPatterns.TeamPattern;
-import model.Match;
-import model.Player;
-import model.Result;
-import model.TopTeam;
+import com.zh0glikk.hltvbot.TextPatterns.*;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -20,21 +14,18 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import parser.MatchesParser;
-import parser.PlayersParser;
-import parser.ResultsParser;
-import parser.TopTeamsParser;
+import parser.*;
 
 import java.util.List;
 
 @Component
 public class Bot extends TelegramLongPollingBot {
 
-    private static final String TOKEN = "1592191900:AAGmb-DhWdOyni2rccFOgCDn2m168PFIjKs";
-    private static final String USERNAME = "hltv_free_bot";
+//    private static final String TOKEN = "1592191900:AAGmb-DhWdOyni2rccFOgCDn2m168PFIjKs";
+//    private static final String USERNAME = "hltv_free_bot";
 
-//    private static final String USERNAME = "testzh0glikkbot";
-//    private static final String TOKEN = "1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo";
+    private static final String USERNAME = "testzh0glikkbot";
+    private static final String TOKEN = "1581504979:AAFNpi89JhXIdz3y3DtrvNqB57M_90wsAqo";
 
     @Autowired
     private HomeKeyboard homeKeyboard;
@@ -76,7 +67,7 @@ public class Bot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
-            } else if ( msg.getText().equals(HomeKeyboard.topTeams) ) {
+            } else if ( msg.getText().contains(HomeKeyboard.topTeams) ) {
                 TopTeamsParser topTeamsParser = new TopTeamsParser();
 
                 List<TopTeam> topTeamsList= topTeamsParser.getContent();
@@ -100,7 +91,7 @@ public class Bot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
-            } else if ( msg.getText().equals(HomeKeyboard.todayMatches) ) {
+            } else if ( msg.getText().contains(HomeKeyboard.todayMatches) ) {
                 MatchesParser matchesParser = new MatchesParser();
 
                 List<Match> matches = matchesParser.getContent();
@@ -125,7 +116,7 @@ public class Bot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
-            } else if ( msg.getText().equals(HomeKeyboard.results) ) {
+            } else if ( msg.getText().contains(HomeKeyboard.results) ) {
                 ResultsParser resultsParser = new ResultsParser();
 
                 List<Result> results = resultsParser.getContent();
@@ -137,6 +128,27 @@ public class Bot extends TelegramLongPollingBot {
                 }
 
                 SendMessage sendMessage = new SendMessage();
+
+                sendMessage.setText(text);
+                sendMessage.setChatId(String.valueOf(msg.getChatId()));
+
+                try {
+                    execute(sendMessage);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+            } else if ( msg.getText().contains(HomeKeyboard.events) ) {
+                EventsParser eventsParser = new EventsParser();
+
+                List<BigEvent> bigEvents = eventsParser.getContent();
+
+                SendMessage sendMessage = new SendMessage();
+
+                String text = "";
+
+                for ( BigEvent bigEvent : bigEvents ) {
+                    text += EventPattern.all(bigEvent) + "\n";
+                }
 
                 sendMessage.setText(text);
                 sendMessage.setChatId(String.valueOf(msg.getChatId()));

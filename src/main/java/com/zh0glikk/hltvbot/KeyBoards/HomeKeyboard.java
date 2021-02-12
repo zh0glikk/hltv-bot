@@ -12,6 +12,7 @@ public class HomeKeyboard {
     public static final String topTeams = "Top teams";
     public static final String todayMatches = "Today matches";
     public static final String results = "Results";
+    public static final String events = "Events";
 
     public ReplyKeyboardMarkup getReplyKeyboardMarkup() {
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
@@ -20,11 +21,15 @@ public class HomeKeyboard {
 
         KeyboardRow row = new KeyboardRow();
 
-        row.add(topTeams);
-        row.add(todayMatches);
-        row.add(results);
-
+        row.add(topTeams + "\uD83C\uDF96");
+        row.add(todayMatches + "\uD83D\uDCFA");
         keyboard.add(row);
+
+        KeyboardRow secondRow = new KeyboardRow();
+        secondRow.add(results + "\uD83D\uDCBE");
+        secondRow.add(events + "\uD83C\uDFC6");
+
+        keyboard.add(secondRow);
 
         keyboardMarkup.setKeyboard(keyboard);
 
